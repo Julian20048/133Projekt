@@ -1,0 +1,31 @@
+[
+  {
+    "spielzeit": "90",
+    "erzTore": "2",
+    "erzAssists": "1",
+    "gelbeKarten": "0",
+    "roteKarten": "0",
+    "erfolgPässe": "50",
+    "spieler": ["Robert Lewandowski"]
+  },
+
+  {
+    "spielzeit": "30",
+    "erzTore": "1",
+    "erzAssists": "2",
+    "gelbeKarten": "1",
+    "roteKarten": "0",
+    "erfolgPässe": "88",
+    "spieler": ["Kingsley Coman"]
+  },
+
+  {
+    "spielzeit": "90",
+    "erzTore": "0",
+    "erzAssists": "0",
+    "gelbeKarten": "0",
+    "roteKarten": "1",
+    "erfolgPässe": "65",
+    "spieler": ["Alphonso Davies"]
+  }
+]
