@@ -1,0 +1,150 @@
+{
+	"id": "eb3eea57-bf71-40a8-ab6b-bb94f4f9b8a7",
+	"name": "Kaderverwaltung",
+	"timestamp": "2022-05-24T19:18:40.969Z",
+	"collection_id": "e1f925b7-c7f8-4f44-a36d-864a07365c9e",
+	"folder_id": 0,
+	"environment_id": "0",
+	"totalPass": 0,
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "a103371b-73a4-41d9-a0d3-1257a5d5b038",
+			"name": "1.0 list all Players",
+			"url": "http://localhost:8080/KaderVerwaltung-1.0/resource/spieler/list",
+			"time": 37,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				37
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "03e92ca0-9923-494f-9571-64ab73ce7885",
+			"name": "1.1 read Players",
+			"url": "http://localhost:8080/KaderVerwaltung-1.0/resource/spieler/read?spielerNr=9",
+			"time": 20,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				20
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "3cc6ac29-1557-4818-9fcb-f661aac569cc",
+			"name": "1.2 read Player not found",
+			"url": "http://localhost:8080/KaderVerwaltung-1.0/resource/spieler/read?spielerNr=99",
+			"time": 22,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				22
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "914038be-2f54-473d-a15e-fa9104624f3e",
+			"name": "2.0 list all games",
+			"url": "http://localhost:8080/KaderVerwaltung-1.0/resource/spiel/list",
+			"time": 34,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				34
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "191a6064-5cd5-4001-ba7b-9e5254e52d29",
+			"name": "2.1 read Games",
+			"url": "http://localhost:8080/KaderVerwaltung-1.0/resource/spiel/read?spielId=1",
+			"time": 92,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				92
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "135f1f2e-2d13-4472-aafe-f24b9f8066e5",
+			"name": "2.2 Game not found",
+			"url": "http://localhost:8080/KaderVerwaltung-1.0/resource/spieler/read?spielerNr=99",
+			"time": 73,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				73
+			],
+			"allTests": [
+				{}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 278,
+	"collection": {
+		"requests": [
+			{
+				"id": "a103371b-73a4-41d9-a0d3-1257a5d5b038",
+				"method": "GET"
+			},
+			{
+				"id": "03e92ca0-9923-494f-9571-64ab73ce7885",
+				"method": "GET"
+			},
+			{
+				"id": "3cc6ac29-1557-4818-9fcb-f661aac569cc",
+				"method": "GET"
+			},
+			{
+				"id": "914038be-2f54-473d-a15e-fa9104624f3e",
+				"method": "GET"
+			},
+			{
+				"id": "191a6064-5cd5-4001-ba7b-9e5254e52d29",
+				"method": "GET"
+			},
+			{
+				"id": "135f1f2e-2d13-4472-aafe-f24b9f8066e5",
+				"method": "GET"
+			}
+		]
+	}
+}
