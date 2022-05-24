@@ -9,9 +9,16 @@
   },
   {
     "name": "Kingsley Coman",
-    "nationalität": "Polen",
-    "spielerNr": "9",
-    "alter":"33",
-    "position": "Stürmer"
+    "nationalität": "Frankreich",
+    "spielerNr": "29",
+    "alter":"25",
+    "position": "Linker Flügel"
+  },
+  {
+    "name": "Alphonso Davies",
+    "nationalität": "Kanada",
+    "spielerNr": "19",
+    "alter":"21",
+    "position": "Linksverteidiger"
   }
 ]
