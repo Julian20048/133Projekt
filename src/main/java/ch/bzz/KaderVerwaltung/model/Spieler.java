@@ -1,4 +1,4 @@
-package model;
+package ch.bzz.KaderVerwaltung.model;
 
 /**
  * Spieler, der das Spiel spielt

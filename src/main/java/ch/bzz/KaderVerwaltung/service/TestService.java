@@ -1,4 +1,4 @@
-package service;
+package ch.bzz.KaderVerwaltung.service;
 
 
 
