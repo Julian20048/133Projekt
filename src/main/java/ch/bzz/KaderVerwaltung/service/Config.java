@@ -16,7 +16,7 @@ import java.util.Set;
 @ApplicationPath("/resource")
 
 public class Config extends Application {
-    private static final String PROPERTIES_PATH = "/home/bzz/webapp/.properties";
+    private static final String PROPERTIES_PATH = "/home/bzz/webapp/kaderVerwaltung.properties";
     private static Properties properties = null;
 
     /**
@@ -27,6 +27,8 @@ public class Config extends Application {
     @Override
     public Set<Class<?>> getClasses() {
         HashSet providers = new HashSet<Class<?>>();
+        providers.add(SpielService.class);
+        providers.add(SpielerService.class);
         providers.add(TestService.class);
         return providers;
     }
