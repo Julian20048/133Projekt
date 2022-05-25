@@ -18,7 +18,7 @@ public class SpielService {
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
     public Response listSpiel(){
-        List<Spiel> spielList = DataHandler.getInstance().readAllSpiels();
+        List<Spiel> spielList = DataHandler.readAllSpiels();
         return Response
                 .status(200)
                 .entity(spielList)
@@ -30,7 +30,7 @@ public class SpielService {
     public Response readSpiel(
             @QueryParam("spielId") int spielId
     ) {
-        Spiel spiel = DataHandler.getInstance().readbyspielId(spielId);
+        Spiel spiel = DataHandler.readbyspielId(spielId);
         return Response
                 .status(200)
                 .entity(spiel)

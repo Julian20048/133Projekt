@@ -16,37 +16,22 @@ import java.util.List;
 /**
  * reads and writes the data in the JSON-files
  */
-public class DataHandler {
-    private static DataHandler instance = null;
-    private List<Spieler> spielerList;
-    private List <Spiel> spielList;
+public class DataHandler { 
+    private static List<Spieler> spielerList;
+    private static List <Spiel> spielList;
 
     /**
      * private constructor defeats instantiation
      */
     private DataHandler() {
-        setSpielList(new ArrayList<>());
-        readSpielJSON();
-        setSpielerList(new ArrayList<>());
-        readSpielerJSON();
+
     }
-
-    /**
-     * gets the only instance of this class
-     * @return
-     */
-    public static DataHandler getInstance() {
-        if (instance == null)
-            instance = new DataHandler();
-        return instance;
-    }
-
-
+    
     /**
      * reads all spielers
      * @return list of spielers
      */
-    public List<Spieler> readAllSpielers() {
+    public static List<Spieler> readAllSpielers() {
         return getSpielerList();
     }
 
@@ -55,7 +40,7 @@ public class DataHandler {
      * @param spielerNr
      * @return the Spieler (null=not found)
      */
-    public Spieler readbyspielerNr(int spielerNr) {
+    public static Spieler readbyspielerNr(int spielerNr) {
         Spieler spieler = null;
         for (Spieler entry : getSpielerList()) {
             if (entry.getSpielerNr() == spielerNr) {
@@ -69,7 +54,7 @@ public class DataHandler {
      * reads all Spiels
      * @return list of spiels
      */
-    public List<Spiel> readAllSpiels() {
+    public static List<Spiel> readAllSpiels() {
 
         return getSpielList();
     }
@@ -79,7 +64,7 @@ public class DataHandler {
      * @param spielId
      * @return the Spiel (null=not found)
      */
-    public Spiel readbyspielId(int spielId) {
+    public static Spiel readbyspielId(int spielId) {
         Spiel spiel = null;
         for (Spiel entry : getSpielList()) {
             if (entry.getSpielId() == spielId) {
@@ -92,7 +77,7 @@ public class DataHandler {
     /**
      * reads the spielers from the JSON-file
      */
-    private void readSpielerJSON() {
+    private static void readSpielerJSON() {
         try {
             String path = Config.getProperty("spielerJSON");
             byte[] jsonData = Files.readAllBytes(
@@ -111,7 +96,7 @@ public class DataHandler {
     /**
      * reads the spiels from the JSON-file
      */
-    private void readSpielJSON() {
+    private static void readSpielJSON() {
         try {
             byte[] jsonData = Files.readAllBytes(
                     Paths.get(
@@ -132,7 +117,12 @@ public class DataHandler {
      *
      * @return value of spielerList
      */
-    private List<Spieler> getSpielerList() {
+    private static List<Spieler> getSpielerList() {
+        if (spielerList == null) {
+            setSpielerList(new ArrayList<>());
+            readSpielerJSON();
+        }
+
         return spielerList;
     }
 
@@ -141,8 +131,8 @@ public class DataHandler {
      *
      * @param spielerList the value to set
      */
-    private void setSpielerList(List<Spieler> spielerList) {
-        this.spielerList = spielerList;
+    private static void setSpielerList(List<Spieler> spielerList) {
+        DataHandler.spielerList = spielerList;
     }
 
     /**
@@ -150,7 +140,11 @@ public class DataHandler {
      *
      * @return value of spielList
      */
-    private List<Spiel> getSpielList() {
+    private static List<Spiel> getSpielList() {
+        if (spielList == null) {
+            setSpielList(new ArrayList<>());
+            readSpielJSON();
+        }
         return spielList;
     }
 
@@ -159,8 +153,8 @@ public class DataHandler {
      *
      * @param spielList the value to set
      */
-    private void setSpielList(List<Spiel> spielList) {
-        this.spielList = spielList;
+    private static void setSpielList(List<Spiel> spielList) {
+        DataHandler.spielList = spielList;
     }
 
 
