@@ -1,13 +1,15 @@
 package ch.bzz.KaderVerwaltung.data;
 
-import ch.bzz.KaderVerwaltung.model.Spieler;
 import ch.bzz.KaderVerwaltung.model.Spiel;
 import ch.bzz.KaderVerwaltung.model.Spieler;
 import ch.bzz.KaderVerwaltung.service.Config;
 
+import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -16,9 +18,9 @@ import java.util.List;
 /**
  * reads and writes the data in the JSON-files
  */
-public class DataHandler { 
-    private static List<Spieler> spielerList;
-    private static List <Spiel> spielList;
+public class DataHandler {
+    private static List<Spieler> SpielerList;
+    private static List<Spiel> SpielList;
 
     /**
      * private constructor defeats instantiation
@@ -26,9 +28,10 @@ public class DataHandler {
     private DataHandler() {
 
     }
-    
+
     /**
      * reads all spielers
+     *
      * @return list of spielers
      */
     public static List<Spieler> readAllSpielers() {
@@ -37,10 +40,11 @@ public class DataHandler {
 
     /**
      * reads a spieler by its uuid
+     *
      * @param spielerNr
      * @return the Spieler (null=not found)
      */
-    public static Spieler readbyspielerNr(int spielerNr) {
+    public static Spieler readSpielerBySpielerNr(int spielerNr) {
         Spieler spieler = null;
         for (Spieler entry : getSpielerList()) {
             if (entry.getSpielerNr() == spielerNr) {
@@ -51,7 +55,42 @@ public class DataHandler {
     }
 
     /**
+     * inserts a new spieler into the spielerList
+     *
+     * @param spieler the spieler to be saved
+     */
+    public static void insertSpieler(Spieler spieler) {
+        getSpielerList().add(spieler);
+        writeSpielerJSON();
+    }
+
+    /**
+     * updates the spielerList
+     */
+    public static void updateSpieler() {
+        writeSpielerJSON();
+    }
+
+    /**
+     * deletes a spieler identified by the spielerNr
+     *
+     * @param SpielerNr the key
+     * @return success=true/false
+     */
+    public static boolean deleteSpieler(int SpielerNr) {
+        Spieler spieler = readSpielerBySpielerNr(SpielerNr);
+        if (spieler != null) {
+            getSpielerList().remove(spieler);
+            writeSpielerJSON();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * reads all Spiels
+     *
      * @return list of spiels
      */
     public static List<Spiel> readAllSpiels() {
@@ -60,14 +99,15 @@ public class DataHandler {
     }
 
     /**
-     * reads a spiel by its uuid
-     * @param spielId
+     * reads a spiel by its SpielId
+     *
+     * @param SpielId
      * @return the Spiel (null=not found)
      */
-    public static Spiel readbyspielId(int spielId) {
+    public static Spiel readSpielsBySpielId(int SpielId) {
         Spiel spiel = null;
         for (Spiel entry : getSpielList()) {
-            if (entry.getSpielId() == spielId) {
+            if (entry.getSpielId() == SpielId) {
                 spiel = entry;
             }
         }
@@ -75,7 +115,41 @@ public class DataHandler {
     }
 
     /**
-     * reads the spielers from the JSON-file
+     * inserts a new spiel into the spielerList
+     *
+     * @param spiel the spiel to be saved
+     */
+    public static void insertSpiel(Spiel spiel) {
+        getSpielList().add(spiel);
+        writeSpielJSON();
+    }
+
+    /**
+     * updates the spielList
+     */
+    public static void updateSpiel() {
+        writeSpielJSON();
+    }
+
+    /**
+     * deletes a spiel identified by the spielId
+     *
+     * @param spielId the key
+     * @return success=true/false
+     */
+    public static boolean deleteSpiel(int spielId) {
+        Spiel spiel = readSpielsBySpielId(spielId);
+        if (spiel != null) {
+            getSpielList().remove(spiel);
+            writeSpielJSON();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * reads the spieler from the JSON-file
      */
     private static void readSpielerJSON() {
         try {
@@ -94,7 +168,27 @@ public class DataHandler {
     }
 
     /**
-     * reads the spiels from the JSON-file
+     * writes the spielerList to the JSON-file
+     */
+    private static void writeSpielerJSON() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectWriter objectWriter = objectMapper.writer(new DefaultPrettyPrinter());
+        FileOutputStream fileOutputStream = null;
+        Writer fileWriter;
+
+        String spielerPath = Config.getProperty("spielerJSON");
+        try {
+            fileOutputStream = new FileOutputStream(spielerPath);
+            fileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
+            objectWriter.writeValue(fileWriter, getSpielerList());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+
+    /**
+     * reads the spiel from the JSON-file
      */
     private static void readSpielJSON() {
         try {
@@ -112,18 +206,39 @@ public class DataHandler {
             ex.printStackTrace();
         }
     }
+
+    /**
+     * writes the spielList to the JSON-file
+     */
+    private static void writeSpielJSON() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectWriter objectWriter = objectMapper.writer(new DefaultPrettyPrinter());
+        FileOutputStream fileOutputStream = null;
+        Writer fileWriter;
+
+        String spielPath = Config.getProperty("spielJSON");
+        try {
+            fileOutputStream = new FileOutputStream(spielPath);
+            fileWriter = new BufferedWriter(new OutputStreamWriter(fileOutputStream, StandardCharsets.UTF_8));
+            objectWriter.writeValue(fileWriter, getSpielList());
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     /**
      * gets spielerList
      *
      * @return value of spielerList
      */
     private static List<Spieler> getSpielerList() {
-        if (spielerList == null) {
+        List<Spieler> spielerList;
+        if (SpielerList == null) {
             setSpielerList(new ArrayList<>());
             readSpielerJSON();
         }
 
-        return spielerList;
+        return SpielerList;
     }
 
     /**
@@ -132,7 +247,7 @@ public class DataHandler {
      * @param spielerList the value to set
      */
     private static void setSpielerList(List<Spieler> spielerList) {
-        DataHandler.spielerList = spielerList;
+        DataHandler.SpielerList = spielerList;
     }
 
     /**
@@ -141,11 +256,11 @@ public class DataHandler {
      * @return value of spielList
      */
     private static List<Spiel> getSpielList() {
-        if (spielList == null) {
+        if (SpielList == null) {
             setSpielList(new ArrayList<>());
             readSpielJSON();
         }
-        return spielList;
+        return SpielList;
     }
 
     /**
@@ -154,8 +269,6 @@ public class DataHandler {
      * @param spielList the value to set
      */
     private static void setSpielList(List<Spiel> spielList) {
-        DataHandler.spielList = spielList;
+        DataHandler.SpielList = spielList;
     }
-
-
 }

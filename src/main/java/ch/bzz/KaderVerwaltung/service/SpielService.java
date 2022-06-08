@@ -11,9 +11,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
+
+/**
+ * services for reading, adding, changing and deleting spiele
+ */
 @Path("spiel")
 public class SpielService {
 
+    /**
+     * reads a list of all spiele
+     * @return  spiele as JSON
+     */
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
@@ -24,15 +32,25 @@ public class SpielService {
                 .entity(spielList)
                 .build();
     }
+
+    /**
+     * reads a publisher identified by the spielId
+     * @param spielId
+     * @return spiel
+     */
     @GET
     @Path("read")
     @Produces(MediaType.APPLICATION_JSON)
     public Response readSpiel(
             @QueryParam("spielId") int spielId
     ) {
+        int httpStatus = 200;
         Spiel spiel = DataHandler.readbyspielId(spielId);
+        if (spiel == null) {
+            httpStatus = 410;
+        }
         return Response
-                .status(200)
+                .status(httpStatus)
                 .entity(spiel)
                 .build();
     }
