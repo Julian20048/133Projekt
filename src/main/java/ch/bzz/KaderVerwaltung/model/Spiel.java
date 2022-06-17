@@ -6,7 +6,7 @@ import java.util.List;
  * Alles was der Spieler während dem Spiel tut
  */
 public class Spiel {
-    private int spielId;
+    private String spielUUID;
     private int spielzeit;
     private int erzTore;
     private int erzAssists;
@@ -14,6 +14,12 @@ public class Spiel {
     private int roteKarten;
     private int erfolgPässe;
     private List<Spieler> spieler;
+
+    public String getSpielUUID() {
+        return spielUUID; }
+
+    public void setSpielUUID(String spielUUID) {
+        this.spielUUID = spielUUID; }
 
     public int getSpielzeit() {
         return spielzeit;
@@ -70,8 +76,5 @@ public class Spiel {
     public void setSpieler(List<Spieler> spieler) {
         this.spieler = spieler;
     }
-
-    public int getSpielId() { return spielId; }
-
-    public void setSpielId(int spielId) { this.spielId = spielId; }
 }
+
