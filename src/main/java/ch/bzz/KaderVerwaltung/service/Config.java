@@ -1,5 +1,7 @@
 package ch.bzz.KaderVerwaltung.service;
 
+import ch.bzz.KaderVerwaltung.util.LocalDateParamConverterProvider;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 import java.io.FileInputStream;
@@ -29,6 +31,9 @@ public class Config extends Application {
         HashSet providers = new HashSet<Class<?>>();
         providers.add(SpielService.class);
         providers.add(SpielerService.class);
+        providers.add(UserService.class);
+        providers.add(LocalDateParamConverterProvider.class);
+
         providers.add(TestService.class);
         return providers;
     }

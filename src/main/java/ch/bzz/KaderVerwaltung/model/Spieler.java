@@ -1,17 +1,81 @@
 package ch.bzz.KaderVerwaltung.model;
 
+import ch.bzz.KaderVerwaltung.data.DataHandler;
+import ch.bzz.KaderVerwaltung.util.LocalDateDeserializer;
+import ch.bzz.KaderVerwaltung.util.LocalDateSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+import javax.ws.rs.FormParam;
+import java.time.LocalDate;
+
 /**
- * a spieler in the KaderVerwaltung
+ * a player in the KaderVerwaltung
  */
 public class Spieler {
+    @JsonIgnore
+    private Spiel Spiel;
 
+    @FormParam("spielerUUID")
+    @NotEmpty
+    @Pattern(regexp = "|[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
     private String spielerUUID;
+
+    @FormParam("name")
+    @NotEmpty
+    @Size(min=3, max=30)
     private String name;
+
+    @FormParam("nationalität")
+    @NotEmpty
+    @Size(min=4, max=50)
     private String nationalität;
+
+    @FormParam("spielerNr")
+    @NotNull
     private int spielerNr;
+
+    @FormParam("alter")
+    @NotEmpty
     private int alter;
-    private String position;
+
+    @FormParam("spiel")
+    @NotEmpty
     private Spiel spiel;
+
+    @FormParam("position")
+    @NotEmpty
+    private String position;
+
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
+    private LocalDate release;
+
+    /**
+     * gets the publisherUUID from the Spiel-object
+     * @return
+     */
+    public String getSpielUUID() {
+        if (getSpielUUID()== null) return null;
+        return spiel.getSpielUUID();
+    }
+
+    /**
+     * creates a Spiel-object without the booklist
+     * @param spielUUID the key
+     */
+    public void setSpielUUID(String spielUUID) {
+        setSpiel(new Spiel());
+        Spiel publisher = DataHandler.readSpielByUUID(spielUUID);
+        getSpiel().setSpielUUID(spielUUID);
+        getSpiel().setSpielzeit(spiel.getSpielzeit());
+    }
+
 
     /**
      * gets spiel
@@ -140,6 +204,4 @@ public class Spieler {
         this.spielerUUID = spielerUUID;
     }
 
-    public void setSpielUUID(String spielUUID) {
-    }
 }

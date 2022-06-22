@@ -60,29 +60,6 @@ public class SpielService {
     }
 
     /**
-     * deletes a specific spiel by uuid
-     * @param spielUUID
-     * @return
-     */
-    @DELETE
-    @Path("delete")
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response deleteSpiel(
-            @NotEmpty
-            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
-            @QueryParam("uuid") String spielUUID
-    ) {
-        int httpStatus = 200;
-        if (!DataHandler.deleteSpiel(spielUUID)) {
-            httpStatus = 410;
-        }
-        return Response
-                .status(httpStatus)
-                .entity("")
-                .build();
-    }
-
-    /**
      * inserts a new spiel
      * @return
      */
@@ -127,6 +104,29 @@ public class SpielService {
 
             DataHandler.updateSpiel();
         } else {
+            httpStatus = 410;
+        }
+        return Response
+                .status(httpStatus)
+                .entity("")
+                .build();
+    }
+
+    /**
+     * deletes a specific spiel by uuid
+     * @param spielUUID
+     * @return
+     */
+    @DELETE
+    @Path("delete")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteSpiel(
+            @NotEmpty
+            @Pattern(regexp = "[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}")
+            @QueryParam("uuid") String spielUUID
+    ) {
+        int httpStatus = 200;
+        if (!DataHandler.deleteSpiel(spielUUID)) {
             httpStatus = 410;
         }
         return Response

@@ -1,4 +1,5 @@
 package ch.bzz.KaderVerwaltung.service;
+
 import ch.bzz.KaderVerwaltung.data.DataHandler;
 
 import javax.ws.rs.GET;
@@ -11,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-
 /**
  * test service
  */
@@ -20,7 +20,7 @@ public class TestService {
 
     /**
      * confirms the application runs
-     * @return message
+     * @return  message
      */
     @GET
     @Path("test")
@@ -32,6 +32,7 @@ public class TestService {
                 .entity("Test erfolgreich")
                 .build();
     }
+
     /**
      * restores the json-files
      * @return Response

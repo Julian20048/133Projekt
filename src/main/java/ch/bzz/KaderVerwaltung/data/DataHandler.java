@@ -2,6 +2,7 @@ package ch.bzz.KaderVerwaltung.data;
 
 import ch.bzz.KaderVerwaltung.model.Spiel;
 import ch.bzz.KaderVerwaltung.model.Spieler;
+import ch.bzz.KaderVerwaltung.model.User;
 import ch.bzz.KaderVerwaltung.service.Config;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,6 +21,7 @@ import java.util.List;
 public final class DataHandler {
     private static List<Spieler> spielerList;
     private static List<Spiel> spielList;
+    private static List<User> userList;
 
     /**
      * private constructor defeats instantiation
@@ -36,8 +38,8 @@ public final class DataHandler {
     }
 
     /**
-     * reads all spielers
-     * @return list of spielers
+     * reads all Spieler
+     * @return list of Spieler
      */
     public static List<Spieler> readAllSpielers() {
         return getSpielerList();
@@ -147,6 +149,16 @@ public final class DataHandler {
         }
     }
 
+    public String readUserRole(String username, String password) {
+        for (User user : getUserList()) {
+            if (user.getUsername().equals(username) &&
+                    user.getPassword().equals(password)) {
+                return user.getUsername();
+            }
+        }
+        return "guest";
+    }
+
     /**
      * reads the spielers from the JSON-file
      */
@@ -225,6 +237,26 @@ public final class DataHandler {
     }
 
     /**
+     * reads the users from the JSON-file
+     */
+    private static void readUserJSON() {
+        try {
+            byte[] jsonData = Files.readAllBytes(
+                    Paths.get(
+                            Config.getProperty("userJSON")
+                    )
+            );
+            ObjectMapper objectMapper = new ObjectMapper();
+            User[] users = objectMapper.readValue(jsonData, User[].class);
+            for (User user : users) {
+                getUserList().add(user);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
      * gets spielerList
      *
      * @return value of spielerList
@@ -274,5 +306,27 @@ public final class DataHandler {
         DataHandler.spielList = spielList;
     }
 
+    /**
+     * gets userList
+     *
+     * @return value of userList
+     */
 
+    public static List<User> getUserList() {
+        if (DataHandler.userList == null) {
+            DataHandler.setUserList(new ArrayList<>());
+            readUserJSON();
+        }
+        return userList;
+    }
+
+    /**
+     * sets userList
+     *
+     * @param userList the value to set
+     */
+
+    public static void setUserList(List<User> userList) {
+        DataHandler.userList = userList;
+    }
 }
