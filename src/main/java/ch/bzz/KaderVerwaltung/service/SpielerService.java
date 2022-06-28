@@ -24,12 +24,22 @@ public class SpielerService {
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listSpielers() {
+
+    public Response listSpielers(
+            @CookieParam("userRole") String userRole
+    ) {
         List<Spieler> spielerList = DataHandler.readAllSpielers();
-        return Response
-                .status(200)
+        int httpStatus;
+        if (userRole == null || userRole.equals("guest")) {
+            httpStatus = 403;
+        }else{
+            httpStatus = 200;
+        }
+        Response response = Response
+                .status(httpStatus)
                 .entity(spielerList)
                 .build();
+        return response;
     }
 
     /**

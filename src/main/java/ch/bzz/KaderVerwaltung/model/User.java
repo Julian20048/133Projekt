@@ -4,14 +4,15 @@ public class User {
     private String userUUID;
     private String username;
     private String password;
-    private String role;
+    private String Userrole;
 
     /**
      * default constructor
      */
     public User() {
-        setRole("guest");
+
     }
+
 
     /**
      * gets userUUID
@@ -74,22 +75,23 @@ public class User {
     }
 
     /**
-     * gets role
+     * gets Userrole
      *
-     * @return value of role
+     * @return value of Userrole
      */
 
-    public String getRole() {
-        return role;
+    public String getUserrole() {
+        return Userrole;
     }
 
     /**
-     * sets role
+     * sets Userrole
      *
-     * @param role the value to set
+     * @param Userrole the value to set
      */
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setUserrole(String Userrole) {
+        this.Userrole = Userrole;
     }
+
 }
