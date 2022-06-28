@@ -10,7 +10,7 @@ public class User {
      * default constructor
      */
     public User() {
-
+        setUserrole("guest");
     }
 
 

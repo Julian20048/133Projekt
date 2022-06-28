@@ -47,7 +47,7 @@ public class UserData {
     private static List<User> readJson() {
         List<User> userList = new ArrayList<>();
         try {
-            byte[] jsonData = Files.readAllBytes(Paths.get(Config.getProperty("user JSON")));
+            byte[] jsonData = Files.readAllBytes(Paths.get(Config.getProperty("userJSON")));
             ObjectMapper objectMapper = new ObjectMapper();
             User[] users = objectMapper.readValue(jsonData, User[].class);
             for (User user : users) {

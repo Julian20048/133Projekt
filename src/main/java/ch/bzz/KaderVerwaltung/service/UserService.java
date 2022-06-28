@@ -22,13 +22,13 @@ public class UserService {
     ) {
         int httpStatus;
         User user = UserData.findUser(username,password);
-        if (user == null ||user.getUserrole() == null || user.getUserrole().equals("guest")){
+        if (user.getUserrole().equals("guest")){
             httpStatus = 404;
         }else {
             httpStatus = 200;
         }
         NewCookie cookie = new NewCookie(
-                "Userrole",
+                "userRole",
                 user.getUserrole(),
                 "/",
                 "",
